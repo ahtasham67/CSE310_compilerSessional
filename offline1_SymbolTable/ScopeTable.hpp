@@ -27,26 +27,22 @@ class ScopeTable
 {
 private:
     int num_buckets, childCnt;
-    string tableID;
+    int tableID;
     SymbolInfo **hashTable;
+    
 
 public:
     ScopeTable *parent_scope;
+    static int tableCount;
 
     ScopeTable(int n, ScopeTable *parent_scope = NULL)
     {
         this->childCnt = 0;
-        if (parent_scope == NULL)
-        {
-            this->tableID = 1;
-        }
-        else
-        {
-            this->tableID = parent_scope->tableID + "." + to_string(++parent_scope->childCnt);
-        }
+        this->tableID = tableCount;
         this->parent_scope = parent_scope;
         num_buckets = n;
         hashTable = new SymbolInfo *[num_buckets];
+        //cout<<num_buckets<<endl;
 
         for (int i = 0; i < num_buckets; i++)
         {
@@ -58,42 +54,57 @@ public:
     {
         for (int i = 0; i < num_buckets; i++)
         {
-            if (hashTable[i] != NULL)
-                delete hashTable[i];
+            SymbolInfo *curr = hashTable[i];
+            while (curr != nullptr)
+            {
+                SymbolInfo *temp = curr;
+                curr = curr->nextPtr;
+                delete temp;
+            }
         }
-        delete hashTable;
-        cout << "destructor called for id= " << tableID << " " << endl;
-        if (parent_scope != NULL)
-            delete parent_scope;
+        delete[] hashTable;
+        cout << "\tScopeTable# " << tableID << " deleted" << endl;
+    }
+
+    int getNumBuckets()
+    {
+        return num_buckets;
+    }
+    int getNumChild()
+    {
+        return childCnt;
     }
 
     int getHashIndex(string name)
     {
-        uint64_t hash = hashFunc ::getSDBMHash(name);
+        uint64_t hash = hashFunc ::getSDBMHash(name, num_buckets);
         int index = hash % num_buckets;
         return index;
     }
 
     int getIndxInChain(string name)
     {
-        int atIndex = -1;
         int index = getHashIndex(name);
         SymbolInfo *curr = hashTable[index];
         int i = 0;
+        //cout<<index<<endl;
+
         while (curr != NULL)
         {
             if (curr->getName() == name)
             {
-                atIndex = i;
-                return atIndex;
+                // cout << "Found at index " << i << " in the chain." << endl;
+                return i;
             }
             curr = curr->nextPtr;
             i++;
         }
-        return atIndex;
+
+        // cout << "Symbol " << name << " not found in the chain." << endl;
+        return -1;
     }
 
-    string getTableID()
+    int getTableID()
     {
         return tableID;
     }
@@ -109,24 +120,36 @@ public:
     SymbolInfo *LookUp(string name)
     {
         int indx = getIndxInChain(name);
-        SymbolInfo *curr = hashTable[indx];
 
+        if (indx == -1)
+        {
+            // cout << "Symbol not found in any chain" << endl;
+            return NULL;
+        }
+
+        // cout << indx << endl;
+        SymbolInfo *curr = hashTable[indx];
         int indxInChain = 0;
+
         while (curr != NULL)
         {
             if (curr->getName() == name)
             {
-                cout << name << " found at position " << indxInChain + 1 << "of scopetable " << tableID << endl;
+                cout<<"\t'"<<name<<"'"<<" found in ScopeTable# "<<tableID<<" at position "<<indx+1<<", "<<indxInChain + 1<<endl;
                 return curr;
             }
             curr = curr->nextPtr;
             indxInChain++;
         }
+
+        //cout << "Symbol " << name << " not found" << endl;
+        //cout<<"'"<<name<<"' not found in any of the ScopeTables"<<endl;
         return NULL;
     }
 
     bool insert(string name, string type)
     {
+
         SymbolInfo *foundentry = LookUp(name);
         if (foundentry == NULL)
         {
@@ -148,14 +171,15 @@ public:
                 }
                 curr->nextPtr = newSymbol;
             }
-            cout << name << " inserted at position " << indx + 1 << " in " << indexInChain + 1 << " of scopeTable " << tableID << endl;
+            // cout << name << " inserted at position " << indx + 1 << " in " << indexInChain + 1 << " of scopeTable " << getTableID() << endl;
+            cout<<"\tInserted in ScopeTable# "<<getTableID()<<" at position "<<indx+1<<", "<< indexInChain+1<<endl;
             return true;
         }
         else
             return false;
     }
 
-    bool remove(string name, string type)
+    bool remove(string name)
     {
         SymbolInfo *entry = LookUp(name);
         if (entry != NULL)
@@ -183,29 +207,32 @@ public:
             temp->nextPtr = NULL;
             delete temp;
             cout << name << " deleted from position " << indx + 1 << " at " << indexInChain + 1 << " of the scopetable of id " << tableID << endl;
+            cout<<"Deleted '"<<name<<"' from ScopeTable# "<<getTableID()<<" at position "<< indexInChain + 1<<", "<< indx + 1<<endl;
             return true;
         }
         else
             return false;
     }
 
-    void Print()
+    void Print(int level = 0)
     {
-        cout << endl;
-        cout << "ScopeTable# " << tableID << endl;
+        string indent(level, '\t');
+        cout << indent << "ScopeTable# " << this->tableID << endl;
         for (int i = 0; i < num_buckets; i++)
         {
-            cout << "\t";
-            cout << i + 1;
+            cout << indent << i + 1 << "--> ";
             SymbolInfo *curr = hashTable[i];
             while (curr != NULL)
             {
-                cout << "-->" << "(" << curr->getName() << "," << curr->getType() << ")" << endl;
+                cout << "<" << curr->getName() << "," << curr->getType();
+                
+                cout << ">";
                 curr = curr->nextPtr;
             }
             cout << endl;
         }
     }
+    
 };
-
+int ScopeTable::tableCount = 0;
 #endif // SCOPETABLE_HPP
