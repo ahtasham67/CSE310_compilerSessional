@@ -22,14 +22,14 @@ Cmd 10: P C
 	1--> 
 	2--> 
 	3--> 
-	4--> <brand,VAR>
-	5--> <23,NUMBER><car,STRUCT,{(INT,n_doors),(BOOL,is_electric),(STRING,brand)}>
+	4--> <brand,VAR> 
+	5--> <23,NUMBER> <car,STRUCT,{(INT,n_doors),(BOOL,is_electric),(STRING,brand)}> 
 	6--> 
 	7--> 
 Cmd 11: D i
-	Number of parameters mismatch for the command D
+	Not found in the current ScopeTable
 Cmd 12: D j
-	Number of parameters mismatch for the command D
+	Not found in the current ScopeTable
 Cmd 13: E
 	ScopeTable# 2 removed
 Cmd 14: S
@@ -48,13 +48,13 @@ Cmd 17: P A
 	6--> 
 	7--> 
 		ScopeTable# 1
-		1--> <i,VAR>
+		1--> <i,VAR> 
 		2--> 
 		3--> 
 		4--> 
 		5--> 
 		6--> 
-		7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)>
+		7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)> 
 Cmd 18: S
 	ScopeTable# 5 created
 Cmd 19: I <= RELOP
@@ -64,12 +64,12 @@ Cmd 20: I == RELOP
 Cmd 21: P A
 	ScopeTable# 5
 	1--> 
-	2--> <==,RELOP>
+	2--> <==,RELOP> 
 	3--> 
 	4--> 
 	5--> 
 	6--> 
-	7--> <<=,RELOP>
+	7--> <<=,RELOP> 
 		ScopeTable# 4
 		1--> 
 		2--> 
@@ -79,37 +79,37 @@ Cmd 21: P A
 		6--> 
 		7--> 
 			ScopeTable# 1
-			1--> <i,VAR>
+			1--> <i,VAR> 
 			2--> 
 			3--> 
 			4--> 
 			5--> 
 			6--> 
-			7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)>
+			7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)> 
 Cmd 22: I >= RELOP
 	Inserted in ScopeTable# 5 at position 4, 1
 Cmd 23: P C
 	ScopeTable# 5
 	1--> 
-	2--> <==,RELOP>
+	2--> <==,RELOP> 
 	3--> 
-	4--> <>=,RELOP>
+	4--> <>=,RELOP> 
 	5--> 
 	6--> 
-	7--> <<=,RELOP>
+	7--> <<=,RELOP> 
 Cmd 24: I <= RELOP
-	Inserted in ScopeTable# 5 at position 7, 2
+	'<=' already exists in the current ScopeTable
 Cmd 25: I foo STRUCT INT a FLOAT b
-	Inserted in ScopeTable# 5 at position 7, 3
+	Inserted in ScopeTable# 5 at position 7, 2
 Cmd 26: P A
 	ScopeTable# 5
 	1--> 
-	2--> <==,RELOP>
+	2--> <==,RELOP> 
 	3--> 
-	4--> <>=,RELOP>
+	4--> <>=,RELOP> 
 	5--> 
 	6--> 
-	7--> <<=,RELOP><<=,RELOP><foo,STRUCT,{(INT,a),(FLOAT,b)}>
+	7--> <<=,RELOP> <foo,STRUCT,{(INT,a),(FLOAT,b)}> 
 		ScopeTable# 4
 		1--> 
 		2--> 
@@ -119,30 +119,30 @@ Cmd 26: P A
 		6--> 
 		7--> 
 			ScopeTable# 1
-			1--> <i,VAR>
+			1--> <i,VAR> 
 			2--> 
 			3--> 
 			4--> 
 			5--> 
 			6--> 
-			7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)>
+			7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)> 
 Cmd 27: D ==
-	Number of parameters mismatch for the command D
+	Deleted '==' from ScopeTable# 5 at position 2, 1
 Cmd 28: I foo VAR
-	Inserted in ScopeTable# 5 at position 7, 4
+	'foo' already exists in the current ScopeTable
 Cmd 29: D 23
-	Number of parameters mismatch for the command D
+	Not found in the current ScopeTable
 Cmd 30: D
 	Number of parameters mismatch for the command D
 Cmd 31: P A
 	ScopeTable# 5
 	1--> 
-	2--> <==,RELOP>
+	2--> 
 	3--> 
-	4--> <>=,RELOP>
+	4--> <>=,RELOP> 
 	5--> 
 	6--> 
-	7--> <<=,RELOP><<=,RELOP><foo,STRUCT,{(INT,a),(FLOAT,b)}><foo,VAR>
+	7--> <<=,RELOP> <foo,STRUCT,{(INT,a),(FLOAT,b)}> 
 		ScopeTable# 4
 		1--> 
 		2--> 
@@ -152,13 +152,13 @@ Cmd 31: P A
 		6--> 
 		7--> 
 			ScopeTable# 1
-			1--> <i,VAR>
+			1--> <i,VAR> 
 			2--> 
 			3--> 
 			4--> 
 			5--> 
 			6--> 
-			7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)>
+			7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)> 
 Cmd 32: L 23
 	'23' not found in any of the ScopeTables
 Cmd 33: S
@@ -170,20 +170,20 @@ Cmd 35: I y VAR
 Cmd 36: P A
 	ScopeTable# 6
 	1--> 
-	2--> <x,VAR>
-	3--> <y,VAR>
+	2--> <x,VAR> 
+	3--> <y,VAR> 
 	4--> 
 	5--> 
 	6--> 
 	7--> 
 		ScopeTable# 5
 		1--> 
-		2--> <==,RELOP>
+		2--> 
 		3--> 
-		4--> <>=,RELOP>
+		4--> <>=,RELOP> 
 		5--> 
 		6--> 
-		7--> <<=,RELOP><<=,RELOP><foo,STRUCT,{(INT,a),(FLOAT,b)}><foo,VAR>
+		7--> <<=,RELOP> <foo,STRUCT,{(INT,a),(FLOAT,b)}> 
 			ScopeTable# 4
 			1--> 
 			2--> 
@@ -193,19 +193,19 @@ Cmd 36: P A
 			6--> 
 			7--> 
 				ScopeTable# 1
-				1--> <i,VAR>
+				1--> <i,VAR> 
 				2--> 
 				3--> 
 				4--> 
 				5--> 
 				6--> 
-				7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)>
+				7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)> 
 Cmd 37: L foo
-	'foo' not found in any of the ScopeTables
+	'foo' found in ScopeTable# 5 at position 7, 2
 Cmd 38: E
 	ScopeTable# 6 removed
 Cmd 39: I num VAR
-	Inserted in ScopeTable# 5 at position 7, 5
+	Inserted in ScopeTable# 5 at position 7, 3
 Cmd 40: I bicycle UNION INT n_gears BOOL is_hydrolic_brake STRING brand
 	Inserted in ScopeTable# 5 at position 4, 2
 Cmd 41: S
@@ -220,17 +220,17 @@ Cmd 44: P A
 	2--> 
 	3--> 
 	4--> 
-	5--> <true,BOOL>
+	5--> <true,BOOL> 
 	6--> 
 	7--> 
 		ScopeTable# 5
 		1--> 
-		2--> <==,RELOP>
+		2--> 
 		3--> 
-		4--> <>=,RELOP><bicycle,UNION,{(INT,n_gears),(BOOL,is_hydrolic_brake),(STRING,brand)}>
+		4--> <>=,RELOP> <bicycle,UNION,{(INT,n_gears),(BOOL,is_hydrolic_brake),(STRING,brand)}> 
 		5--> 
 		6--> 
-		7--> <<=,RELOP><<=,RELOP><foo,STRUCT,{(INT,a),(FLOAT,b)}><foo,VAR><num,VAR>
+		7--> <<=,RELOP> <foo,STRUCT,{(INT,a),(FLOAT,b)}> <num,VAR> 
 			ScopeTable# 4
 			1--> 
 			2--> 
@@ -240,13 +240,13 @@ Cmd 44: P A
 			6--> 
 			7--> 
 				ScopeTable# 1
-				1--> <i,VAR>
+				1--> <i,VAR> 
 				2--> 
 				3--> 
 				4--> 
 				5--> 
 				6--> 
-				7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)>
+				7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)> 
 Cmd 45: E
 	ScopeTable# 7 removed
 Cmd 46: E
@@ -265,11 +265,13 @@ Cmd 49: P A
 	6--> 
 	7--> 
 		ScopeTable# 1
-		1--> <i,VAR>
+		1--> <i,VAR> 
 		2--> 
 		3--> 
 		4--> 
 		5--> 
 		6--> 
-		7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)>
+		7--> <foo,FUNCTION,INT<==(INT,FLOAT,INT)> 
 Cmd 50: Q
+	ScopeTable# 8 removed
+	ScopeTable# 1 removed

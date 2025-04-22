@@ -68,7 +68,6 @@ public:
 
 		if (currentTable->parent_scope == NULL)
 		{
-			// This is the global scope
 			cout << "\tScopeTable# " << currentTable->getTableID() << " cannot be removed (Global Scope)" << endl;
 			return;
 		}
@@ -97,8 +96,9 @@ public:
 
 				return true;
 			}
-			else
+			else{
 				return false;
+			}
 		}
 	}
 
@@ -130,23 +130,25 @@ public:
 	// and so on. This method will return a pointer to the object of the SymbolInfo class
 	// representing the looked up symbol.
 
-	SymbolInfo *lookup(string name)
-	{
-		ScopeTable *curr = currentTable;
-		while (curr != NULL)
-		{
-			SymbolInfo *existing_entry = curr->LookUp(name);
-			if (existing_entry != NULL)
-			{
-				// so, found in this scopetable
-				return existing_entry;
-			}
-			curr = curr->parent_scope;
-		}
-		// cout << "'" << name << "' NOOT found in any of the ScopeTables" << endl;
-		cout << "\t'" << name << "' not found in any of the ScopeTables" << endl;
-		return NULL;
-	}
+	SymbolInfo* lookup(string name, bool print = false)
+{
+    ScopeTable* curr = currentTable;
+    while (curr != NULL)
+    {
+        SymbolInfo* existing_entry = curr->LookUp(name, print);
+        if (existing_entry != NULL)
+        {
+            return existing_entry;
+        }
+        curr = curr->parent_scope;
+    }
+
+    if (print)
+        cout << "\t'" << name << "' not found in any of the ScopeTables" << endl;
+
+    return NULL;
+}
+
 	// • Print Current Scope Table: Print the current scope table.
 	// • Print All Scope Table: Print all the scope tables currently in the symbol table.
 	void PrintCurrentScopeTable()
@@ -181,8 +183,16 @@ public:
     }
 }
 
-	
-
+	void ExitAllScope(){
+		while (currentTable -> parent_scope != NULL)
+		{
+			ExitScope();
+		}
+		delete currentTable;
+		currentTable = NULL;
+		//cout << "All scope tables exited" << endl;
+		cout << "\tScopeTable# " << 1 << " removed" << endl;
+	}
 };
 
 #endif
