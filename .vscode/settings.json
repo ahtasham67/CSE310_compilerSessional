@@ -1,5 +1,12 @@
 {
   "files.associations": {
-    "string": "cpp"
+    "string": "cpp",
+    "iostream": "cpp",
+    "__node_handle": "cpp",
+    "regex": "cpp",
+    "typeindex": "cpp",
+    "typeinfo": "cpp",
+    "chrono": "cpp",
+    "text_encoding": "cpp"
   }
 }
