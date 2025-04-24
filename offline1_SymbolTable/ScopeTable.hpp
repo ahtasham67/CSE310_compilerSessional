@@ -29,18 +29,22 @@ private:
     int num_buckets, childCnt;
     int tableID;
     SymbolInfo **hashTable;
+    int hashType; // 0 for SDBM, 1 for DJB2, 2 for FNV1a
+    //which function to use for hashing
+
 
 public:
     ScopeTable *parent_scope;
     static int tableCount;
 
-    ScopeTable(int n, ScopeTable *parent_scope = NULL)
+    ScopeTable(int hashtype,int n, ScopeTable *parent_scope = NULL)
     {
         this->childCnt = 0;
         this->tableID = tableCount;
         this->parent_scope = parent_scope;
         num_buckets = n;
         hashTable = new SymbolInfo *[num_buckets];
+        this->hashType = hashtype;
         // cout<<num_buckets<<endl;
 
         for (int i = 0; i < num_buckets; i++)
@@ -76,9 +80,12 @@ public:
 
     int getHashIndex(string name)
     {
-        uint64_t hash = hashFunc ::getSDBMHash(name, num_buckets);
-        int index = hash % num_buckets;
-        return index;
+        if (hashType == 0)
+            return hashFunc::getSDBMHash(name, num_buckets);
+        else if (hashType == 1)
+            return hashFunc::getDJB2Hash(name) % num_buckets;
+        else
+            return hashFunc::getFNV1aHash(name) % num_buckets;
     }
 
     int getIndxInChain(string name)

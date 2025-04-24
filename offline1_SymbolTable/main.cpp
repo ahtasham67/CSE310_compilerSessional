@@ -3,9 +3,13 @@ using namespace std;
 
 #include "SymbolTable.hpp"
 
-int main()
+int main(int argc, char *argv[])
 {
-
+    int hashType = 0; // 0 for SDBM, 1 for DJB2, 2 for FNV1a
+    if (argc > 1)
+    {
+        hashType = atoi(argv[1]);
+    }
     string input_filename = "input.txt";
     string output_filename = "output.txt";
 
@@ -14,8 +18,8 @@ int main()
 
     int total_number_of_buckets;
     cin >> total_number_of_buckets;
-    cin.ignore(); // to ignore the newline character after the integer input
-    SymbolTable *symbolTable = new SymbolTable(total_number_of_buckets);
+    cin.ignore(); 
+    SymbolTable *symbolTable = new SymbolTable(hashType, total_number_of_buckets);
     string choice, line;
     int commanCnt = 0;
     while (getline(cin, line))

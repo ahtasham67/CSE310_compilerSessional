@@ -1,0 +1,4 @@
+HashFunction,Collisions,BucketSize,CollisionRatio
+SDBM,5,1000,0.005
+DJB2,3,1000,0.003
+FNV-1a,3,1000,0.003

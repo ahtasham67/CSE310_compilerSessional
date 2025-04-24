@@ -22,14 +22,16 @@ class SymbolTable
 {
 	ScopeTable *currentTable;
 	int num_buckets;
+	int type;
 
 public:
-	SymbolTable(int n)
-	{
+	SymbolTable(int type, int n)
+	{	
 		this->num_buckets = n;
+		this->type = type;
 		//increment the table count
 		ScopeTable::tableCount++;
-		currentTable = new ScopeTable(num_buckets);
+		currentTable = new ScopeTable(type,num_buckets);
 		cout << "\tScopeTable# " << currentTable->getTableID() << " created" << endl;
 	}
 
@@ -53,7 +55,7 @@ public:
 		if (currentTable != NULL)
 			currentTable->incrementChildCnt();
 			ScopeTable::tableCount++;
-		ScopeTable *newTable = new ScopeTable(num_buckets, currentTable);
+		ScopeTable *newTable = new ScopeTable(type, num_buckets, currentTable);
 		currentTable = newTable;
 		cout << "\tScopeTable# " << currentTable->getTableID() << " created" << endl;
 	}
