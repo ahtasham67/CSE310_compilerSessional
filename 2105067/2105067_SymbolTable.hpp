@@ -1,7 +1,7 @@
 #ifndef SYMBOLTABLE
 #define SYMBOLTABLE
 
-#include "ScopeTable.hpp"
+#include "2105067_ScopeTable.hpp"
 
 #include <iostream>
 #include <string>

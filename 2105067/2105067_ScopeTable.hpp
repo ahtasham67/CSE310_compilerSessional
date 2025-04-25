@@ -1,8 +1,8 @@
 #ifndef SCOPETABLE_HPP
 #define SCOPETABLE_HPP
 
-#include "hash.hpp"
-#include "symbolInfo.hpp"
+#include "2105067_hash.hpp"
+#include "2105067_symbolInfo.hpp"
 
 #include <iostream>
 #include <string>
@@ -238,4 +238,4 @@ public:
 };
 int ScopeTable::tableCount = 0;
 int ScopeTable::collisionCount = 0;
-#endif 
+#endif // SCOPETABLE_HPP

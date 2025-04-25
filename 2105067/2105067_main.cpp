@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include "SymbolTable.hpp"
+#include "2105067_SymbolTable.hpp"
 
 int main(int argc, char *argv[])
 {
